@@ -88,12 +88,7 @@ func (c *Client) KillSession(sessionID int) error {
 
 // Gets the log lines from this session.
 func (c *Client) GetSessionLogs(sessionID, from, size int) ([]string, error) {
-	data := &GetSessionLogsRequest{
-		From: from,
-		Size: size,
-	}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("/sessions/%d/log", sessionID), data)
+	req, err := c.NewRequest("GET", fmt.Sprintf("/sessions/%d/log?from=%d&size=%d", sessionID, from, size), nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "creating request")
 	}
